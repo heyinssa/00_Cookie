@@ -1,20 +1,32 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 const axios = require('axios');
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 const MiniMain = () => {
-
+  const [cookies] = useCookies();
   const create = async () => {
+
     try {
-      
+      const create = await axios.get("http://skyrich3.synology.me:9905/api/v1/create");
+      //const read = await axios.get("http://skyrich3.synology.me:9905/api/v1/read");
+      //const update = await axios.get("http://skyrich3.synology.me:9905/api/v1/update");
+      //const del = await axios.get("http://skyrich3.synology.me:9905/api/v1/delete");
+      console.log(create); //, read, update, del
+      console.log(cookies);
+      console.log('ASfasfas');
     }
     catch {
 
     }
   }
+
+  useEffect(() => {
+    create();
+
+  }, []);
+
   return <>We Can See MainCookie !</>;
 };
 
