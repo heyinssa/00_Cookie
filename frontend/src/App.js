@@ -1,9 +1,11 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
-function App() {
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+
+const Main = () => {
   const [text, setText] = useState("");
   const [isRemember, setIsRemember] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["rememberText"]);
@@ -12,6 +14,7 @@ function App() {
   let after1m = new Date();
 
   useEffect(() => {
+    console.log(cookies);
     if (cookies.rememberText !== undefined) {
       setText(cookies.rememberText);
       setIsRemember(true);
@@ -23,30 +26,35 @@ function App() {
   }
 
   const handleOnChange = (e) => {
-    after1m.setMinutes(now.getMinutes() + 1);
+    after1m.setSeconds(now.getSeconds() + 5);
     setIsRemember(e.target.checked);
-    if (e.target.chekced) {
+    if (e.target.checked) {
+      console.log('safas');
       setCookie("rememberText", text, { path: "/", expires: after1m });
     } else {
       removeCookie("rememberText");
     }
   };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+  <input value={text} onChange={onChange}/>
+  <input type="checkBox" onChange={handleOnChange} checked={isRemember}/>
+    <h1>{text}</h1>
+    </>
+  )
+}
+function App() {
+  
+  return (
+    <>
+      <Router>
+      <Switch>
+        <Route exact path="/" component={Main} />
+     
+      </Switch>
+    </Router>
+
+    </>
   );
 }
 
