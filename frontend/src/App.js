@@ -32,7 +32,7 @@ const Main = () => {
     after1m.setSeconds(now.getSeconds() + 10);
     setIsRemember(e.target.checked);
     if (e.target.checked) {
-      console.log('we save cookies on path "Main"');
+      console.log('we save cookies on path "Main".');
       setCookie("CookieKey", text, { path: "/Main", expires: after1m });
     } else {
       removeCookie("CookieKey");
