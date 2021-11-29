@@ -1,10 +1,20 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+const axios = require('axios');
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const MiniMain = () => {
+
+  const create = async () => {
+    try {
+      
+    }
+    catch {
+
+    }
+  }
   return <>We Can See MainCookie !</>;
 };
 
