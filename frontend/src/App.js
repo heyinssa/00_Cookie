@@ -2,29 +2,26 @@ import "./App.css";
 import { createRef, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-const axios = require('axios');
+const axios = require("axios");
 
 const MiniMain = () => {
   const [cookies] = useCookies();
   const create = async () => {
-
     try {
-      const create = await axios.get("http://skyrich3.synology.me:9905/api/v1/create");
+      const create = await axios.get("https://betti.kr:9000/api/cookie", {
+        withCredentials: true,
+      });
       //const read = await axios.get("http://skyrich3.synology.me:9905/api/v1/read");
       //const update = await axios.get("http://skyrich3.synology.me:9905/api/v1/update");
       //const del = await axios.get("http://skyrich3.synology.me:9905/api/v1/delete");
       console.log(create); //, read, update, del
       console.log(cookies);
-      console.log('ASfasfas');
-    }
-    catch {
-
-    }
-  }
+      console.log("good");
+    } catch {}
+  };
 
   useEffect(() => {
     create();
-
   }, []);
 
   return <>We Can See MainCookie !</>;
@@ -84,7 +81,7 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/Main" element={<Main />} />
-          <Route exact path="/Main/main" element={<MiniMain />} />
+          <Route exact path="/" element={<MiniMain />} />
 
           <Route exact path="/Cookie" element={<Cookie />} />
         </Routes>
