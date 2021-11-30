@@ -1,6 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useCookies } from "react-cookie"; // https://sirong.tistory.com/101
 import axios from "axios"
 
 const Login = ({handlerClick}) => {
@@ -31,11 +32,11 @@ const Login = ({handlerClick}) => {
 }
 
 const Main = ({isLogin}) => {
-
-  console.log(isLogin);
+  const [cookies, setCookie, removeCookie] = useCookies();
+  console.log(cookies.accessToken);
   return (
     <>
-    {isLogin ?  (
+    {(cookies.accessToken !== undefined)? (
       <>
       로그인된 상태입니다!
       </>
