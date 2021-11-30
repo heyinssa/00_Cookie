@@ -2,15 +2,24 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials :true
+}));
+app.use(cookieParser());
+
 app.set("port", port); // 서버의 포트에 인자(port)를 설정. 일종의 전역변수.
 
+const accessToken = "14NRUBFUIH2QATI41FA1412";
 app.post("/data", (req, res) => {
   // 경로의 파일을 전송한다.
-  res.send("scccess");
+  res.cookie('accessToken', accessToken);
+  res.send("cookie send!");
+
 });
 
 // app.get("/data/special", (req, res) => {

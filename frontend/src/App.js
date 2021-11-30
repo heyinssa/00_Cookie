@@ -1,10 +1,9 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios"
 
-const Login = () => {
+const Login = ({handlerClick}) => {
   const handlerClickButton = async() => {
     try {
       const data = {id : "kim", email:"kim@gmail.com"};
@@ -14,10 +13,11 @@ const Login = () => {
       const result = await axios.post(URL, JSON.stringify(data), {
         headers: {
           "Content-Type": `application/json`,
-        }
+        }, withCredentials : true
       })
-      console.log(result.data);
-    }
+      console.log("액세스 토큰 : " + result.data);
+      handlerClick();
+  }
     catch (e) {
       alert(e);
     }
@@ -30,18 +30,37 @@ const Login = () => {
   )
 }
 
-const RegisterPage = () => {
-  return <></>;
-};
+const Main = ({isLogin}) => {
+
+  console.log(isLogin);
+  return (
+    <>
+    {isLogin ?  (
+      <>
+      로그인된 상태입니다!
+      </>
+    ) : (
+      <Navigate to="/login"/>
+    )
+  }
+  </>
+  )
+}
+
 
 function App() {
+  const [isLogin, setIsLogin] = useState(false);
+
+  const setLogin = () => {
+    setIsLogin(true);
+    console.log("login : ", isLogin);
+  }
   return (
     <>
       <Router>
         <Routes>
-          <Route exact path="/main" element={<Main />} />
-
-          <Route exact path="/login" element={<Login />} />
+  <Route exact path="/main" element={<Main isLogin={isLogin}/>} />
+          <Route exact path="/login" element={<Login handlerClick={setLogin}/>} />
         </Routes>
       </Router>
     </>
