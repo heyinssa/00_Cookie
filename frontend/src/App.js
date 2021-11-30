@@ -32,13 +32,29 @@ const MiniMain = () => {
       });
   };
 
+  const handleCookie3 = () => {
+    axios
+      .get('http://localhost:9905/api/cookie', {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log('성공!');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <button type="button" onClick={handleCookie} className="loginbutton">
-        cookie
+        http cookie
       </button>
       <button type="button" onClick={handleCookie2} className="loginbutton">
-        cookie2
+        https cookie2
+      </button>
+      <button type="button" onClick={handleCookie3} className="loginbutton">
+        local cookie3
       </button>
     </>
   );

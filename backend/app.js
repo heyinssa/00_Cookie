@@ -6,17 +6,20 @@ import cookieParser from 'cookie-parser';
 
 const app = express();
 
-app.use(express.json())
-app.use(cors())
-app.use(morgan('combined'))
-app.use(helmet())
+app.use(express.json());
+app.use(cors());
+app.use(morgan('combined'));
+app.use(helmet());
 app.use(cookieParser());
 
-app.use('/', function (req, res, next) {
-	// res.cookie('key', 'value', {
-    // 	maxAge:10000
-	// });
-	return res.send("asdfads");
+app.use('/api/cookie', function (req, res, next) {
+  console.log('here');
+  res.cookie('key', 'value', {
+    maxAge: 10000,
+    SameSite: 'none',
+    secure: true,
+  });
+  return res.send('cookie create');
 });
 
 // app.get('/currentcounter', function(req, res) {
@@ -32,5 +35,5 @@ app.use('/', function (req, res, next) {
 // });
 
 app.listen(9905, '0.0.0.0', () => {
-    console.log("Start!");
-})
+  console.log('Start!');
+});
