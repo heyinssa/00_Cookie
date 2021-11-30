@@ -45,6 +45,19 @@ const MiniMain = () => {
       });
   };
 
+  const handleCookie4 = () => {
+    axios
+      .get('https://skyrich3.synology.me:9905/api/v1/create', {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log('성공!');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <button type="button" onClick={handleCookie} className="loginbutton">
@@ -55,6 +68,9 @@ const MiniMain = () => {
       </button>
       <button type="button" onClick={handleCookie3} className="loginbutton">
         local cookie3
+      </button>
+      <button type="button" onClick={handleCookie4} className="loginbutton">
+        ycha home cookie4
       </button>
     </>
   );
