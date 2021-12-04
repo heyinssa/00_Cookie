@@ -4,6 +4,10 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 
+import { User } from './user.js'
+import { signin } from './jwt.js'
+import { auth } from './middleware.js'
+
 const app = express();
 
 app.use(express.json())
@@ -12,25 +16,33 @@ app.use(morgan('combined'))
 app.use(helmet())
 app.use(cookieParser());
 
-app.use('/', function (req, res, next) {
-	// res.cookie('key', 'value', {
-    // 	maxAge:10000
-	// });
-	return res.send("asdfads");
+app.post('/api/auth/login', function (req, res, next) {
+	const id = req.body.id
+	const password = req.body.password
+	
+	const user = User.find(e => e.id == id && e.password == password)
+	
+	if (!user) return res.status(404).json({ "message" : "User not found" });
+	
+	return res.status(200).json({
+		"accessToken" : signin(user)
+	});
 });
 
-// app.get('/currentcounter', function(req, res) {
-//     var visitors = req.cookies.visitors;
-//     res.send('Visitors: ' + visitors);
-// });
+app.get('/api/auth', auth, function (req, res, next) {
+	return res.sendStatus(200)
+});
 
-// app.get('/updatevisitors', function(req, res) {
-//     var new_value = 38;
+app.get('/api/user/profile', auth, function (req, res, next) {
+	const user_id = req.user.user_id
+	
+	const user = User.find(e => e.user_id == user_id)
+	
+	if (!user) return res.status(404).json({ "message" : "Invalid User" });
+	
+	return res.status(200).json(user)
+});
 
-//     res.cookie('visitors', new_value);
-//     res.send('Visitors updated.');
-// });
-
-app.listen(9905, '0.0.0.0', () => {
+app.listen(5000, '0.0.0.0', () => {
     console.log("Start!");
 })
