@@ -9,7 +9,7 @@ export function signin(user) {
 
     return jwt.sign(payload, JWT_SECRET, { 
       algorithm: 'HS256',
-      expiresIn: '5m',
+      expiresIn: '5s',
     });
 }
   

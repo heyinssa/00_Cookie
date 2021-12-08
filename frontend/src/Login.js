@@ -28,6 +28,7 @@ const Login = () => {
   return (
     <>
     	<h1>ycha로 로그인 시도합니다.</h1>
+		<h2>access_token은 로그인후 5초뒤에 없어집니다.</h2>
     	<button onClick={handlerClickButton} type="button">로그인</button> <br/>
     	<Link to="/">
     		메인페이지로

@@ -11,14 +11,16 @@ const Main = () => {
     checkAccess();
   }, []);
 
-  const checkAccess = async() => {
+  const checkAccess = () => {
     const URL = "https://skyrich3.synology.me:9904/api/user/profile";
-    await axios.get(URL)
+    axios.get(URL)
 		.then((response) => {
+			console.log(response)
 			setIsLogin(true);
 			setProfile(response.data)
 		})
 		.catch((error) => {
+			console.log(error)
 			setIsLogin(false);
 		});
   }
@@ -35,6 +37,7 @@ const Main = () => {
       <>
       로그인된 상태입니다!
 	  <pre>{JSON.stringify(profile, null, 4)}</pre>
+	  <button onClick={checkAccess}>새로고침</button>
       <button onClick={logout}>로그아웃</button>
       </>
     ) : (
